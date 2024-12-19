@@ -27,13 +27,13 @@ I am passionate about technology and problem-solving. Here's a glimpse of my wor
 <dt>Course Code</dt>
 <dd>Course Code Placeholder</dd>
 <dt>Name</dt>
-<dd>Your Name</dd>
+<dd>Pratham Prakash Honnappanavar</dd>
 <dt>SRN</dt>
-<dd>Your SRN</dd>
+<dd>01FE24BCS404</dd>
 <dt>Course Instructor</dt>
 <dd>Instructor Name Placeholder</dd>
 <dt>University</dt>
-<dd>Your University Name</dd>
+<dd>KLE TECHNOLOGICAL UNIVERSITY HUBLI</dd>
 <dt>Portfolio Topic/Domain</dt>
 <dd>Google</dd>
 </dl>

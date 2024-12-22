@@ -60,6 +60,7 @@ function toggleMenu() {
     menu.classList.toggle('active'); // Toggle the active class to show/hide the menu
   }
 
+  /*
   // Disable right-click (context menu) but allow clicking elements
 document.addEventListener('contextmenu', function (e) {
     // Check if the right-click is on a specific element, such as a button or link
@@ -106,6 +107,6 @@ document.addEventListener('contextmenu', function (e) {
     window.addEventListener('resize', function() {
       devtools.orientation = window.orientation;
     });
-  })();
+  })();*/
 
   

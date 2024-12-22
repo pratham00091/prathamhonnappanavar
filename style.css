@@ -671,3 +671,89 @@ body {
   color: #777;
   margin-bottom: 15px;
 }
+
+/* header text2 animation*/
+.text2 {
+  width: 50%;
+  float: left;
+  box-sizing: border-box;
+  margin-top: 190px;
+  font-weight: bold;
+  font-size: 35px;
+  font-family: "AmstelvarAlpha", sans-serif;
+  color: #333;
+  margin-left: 5%;
+  text-align: left;
+  overflow: hidden; 
+}
+
+.text2 h1 {
+  overflow: hidden; 
+  border-right: .15em solid orange;
+  white-space: nowrap; 
+  margin: 0; 
+  letter-spacing: .14em; 
+  padding-right: 0.10m; 
+  animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+.text2 h1:nth-child(2) {
+  visibility: hidden; 
+  animation: typing 3.5s steps(40, end) 3.5s forwards, blink-caret .75s step-end infinite 3.5s, show 0s forwards 3.5s; /* Delay for the second line */
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100%; } 
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: #ffffff; }
+}
+
+/* Show the second line after the first line finishes typing */
+@keyframes show {
+  from { visibility: hidden; }
+  to { visibility: visible; }
+}
+
+/* Stop the cursor blinking after the first line finishes typing */
+.text2 h1:first-child {
+  animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite, stop-caret 0s forwards 3.5s; /* Stop blinking after 3.5s */
+}
+
+/* Stop blinking cursor animation */
+@keyframes stop-caret {
+  from { border-color: #333; }
+  to { border-color: transparent; }
+}
+
+@media (max-width: 768px) {
+  .text2 {
+    width: 90%; /* Increase width for smaller screens */
+    margin-left: 5%; /* Center the text */
+    margin-top: 100px; /* Adjust top margin */
+    font-size: 25px; /* Decrease font size */
+  }
+
+  .text2 h1 {
+    font-size: 25px; /* Decrease font size for h1 */
+  }
+
+  .text2 h1:nth-child(2) {
+    animation: typing 3.5s steps(40, end) 3.5s forwards, blink-caret .75s step-end infinite 3.5s, show 0s forwards 3.5s; /* Keep the same animation */
+  }
+}
+
+@media (max-width: 480px) {
+  .text2 {
+    font-size: 20px; /* Further decrease font size for very small screens */
+  }
+
+  .text2 h1 {
+    font-size: 20px; /* Further decrease font size for h1 */
+  }
+}

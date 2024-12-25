@@ -757,3 +757,82 @@ body {
   font-size: 24px;
   z-index: 9999; /* Ensure it appears above other content */
 }
+
+.line {
+  width: 100%; /* Adjust width as needed */
+  height: 2px; /* Thickness of the line */
+  background-color: #007BFF; /* Line color */
+}
+
+/* cardd shine home page */
+.card-containerrr {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 2rem auto;
+  max-width: 1200px;
+  padding: 1rem;
+}
+
+.cardddd {
+  background: linear-gradient(0deg, rgba(40, 44, 52, 1) 0%, rgba(17, 0, 32, 0.5) 100%);
+  border: 1px solid #ffffff22;
+  border-radius: 0.7rem;
+  box-shadow: 0 7px 20px 5px #00000088;
+  overflow: hidden;
+  width: 30%;
+  text-align: center;
+  padding: 1rem;
+  transition: 0.5s all;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  position: relative;
+}
+
+.cardddd img {
+  width: 100%;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+.cardddd h2 {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+
+.cardddd p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #a89ec9;
+}
+
+
+
+.cardddd button:hover {
+  background-color: #b65dbb;
+}
+
+.cardddd::before {
+  position: absolute;
+  content: "";
+  box-shadow: 0 0 100px 40px #ffffff08;
+  top: -10%;
+  left: -100%;
+  transform: rotate(-45deg);
+  height: 60rem;
+  width: 200%;
+  transition: 0.7s all;
+}
+
+.cardddd:hover {
+  border: 1px solid #ffffff44;
+  box-shadow: 0 7px 50px 10px #000000aa;
+  transform: scale(1.015);
+  filter: brightness(1.3);
+}
+
+.cardddd:hover::before {
+  filter: brightness(0.5);
+  top: -100%;
+  left: 200%;
+}

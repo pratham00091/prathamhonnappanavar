@@ -1398,3 +1398,29 @@ pre {
   transform: translateY(0);
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
 }
+
+
+.sdg {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  padding: 20px;
+}
+
+.sdg h2 {
+  color: #2c3e50;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.sdg ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sdg ul li {
+  font-size: 18px;
+  margin: 5px 0;
+  color: #34495e;
+}

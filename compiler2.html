@@ -1,0 +1,180 @@
+<link rel="stylesheet" href="style.css">
+<!-- Full Code Implementation Block -->
+<div class="block" data-aos="fade-up">
+    <h1 style="text-align: center;">4. Full Code Implementation (C++)</h1>
+    
+    <!-- Code Editor Block -->
+     <div class="back">
+        <a href="Emergency.html"><button>Back</button></a>
+     </div>
+    <div class="code-editor">
+      <button class="run-btn" onclick="simulateCodeRun()">Run Code</button>
+      <pre><code class="cpp">
+        #include <iostream>
+            #include <vector>
+            #include <queue>
+            #include <climits>
+            #include <string>
+            
+            using namespace std;
+            
+            // Structure to represent an emergency
+            struct Emergency {
+                string location;
+                int severity; // Higher value means higher priority
+                int id;       // Unique ID for each emergency
+            };
+            
+            // Structure to represent a resource
+            struct Resource {
+                string name;
+                int location; // Index of the resource's location
+            };
+            
+            // Comparator for priority queue (higher severity prioritized)
+            struct CompareEmergency {
+                bool operator()(Emergency const &e1, Emergency const &e2) {
+                    return e1.severity < e2.severity;
+                }
+            };
+            
+            // Graph class for Dijkstra's algorithm
+            class Graph {
+                int V; // Number of vertices (locations)
+                vector<vector<pair<int, int>>> adj; // Adjacency list (node, weight)
+            
+            public:
+                Graph(int V) : V(V), adj(V) {}
+            
+                void addEdge(int u, int v, int w) {
+                    adj[u].emplace_back(v, w);
+                    adj[v].emplace_back(u, w); // Undirected graph
+                }
+            
+                vector<int> shortestPath(int src) {
+                    vector<int> dist(V, INT_MAX);
+                    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
+            
+                    dist[src] = 0;
+                    pq.emplace(0, src);
+            
+                    while (!pq.empty()) {
+                        int d = pq.top().first;
+                        int u = pq.top().second;
+                        pq.pop();
+            
+                        if (d > dist[u]) continue;
+            
+                        for (auto &[v, w] : adj[u]) {
+                            if (dist[u] + w < dist[v]) {
+                                dist[v] = dist[u] + w;
+                                pq.emplace(dist[v], v);
+                            }
+                        }
+                    }
+                    return dist;
+                }
+            };
+            
+            // Emergency Response System
+            class EmergencyResponseSystem {
+                vector<Resource> resources;
+                priority_queue<Emergency, vector<Emergency>, CompareEmergency> emergencyQueue;
+                Graph graph;
+            
+            public:
+                EmergencyResponseSystem(int locations) : graph(locations) {}
+            
+                void addResource(const string &name, int location) {
+                    resources.push_back({name, location});
+                }
+            
+                void addEmergency(const string &location, int severity, int id) {
+                    emergencyQueue.push({location, severity, id});
+                }
+            
+                void addRoad(int location1, int location2, int distance) {
+                    graph.addEdge(location1, location2, distance);
+                }
+            
+                void handleEmergencies() {
+                    while (!emergencyQueue.empty()) {
+                        Emergency current = emergencyQueue.top();
+                        emergencyQueue.pop();
+            
+                        cout << "Handling Emergency at: " << current.location << " (Severity: " << current.severity << ")\n";
+            
+                        int bestResource = -1;
+                        int minDistance = INT_MAX;
+            
+                        for (int i = 0; i < resources.size(); ++i) {
+                            vector<int> distances = graph.shortestPath(resources[i].location);
+            
+                            // Assume emergency location ID is mapped to an index
+                            int emergencyLocation = current.id; 
+                            if (distances[emergencyLocation] < minDistance) {
+                                bestResource = i;
+                                minDistance = distances[emergencyLocation];
+                            }
+                        }
+            
+                        if (bestResource != -1) {
+                            cout << "Assigned Resource: " << resources[bestResource].name
+                                 << " (Distance: " << minDistance << ")\n\n";
+                        } else {
+                            cout << "No available resource for this emergency.\n\n";
+                        }
+                    }
+                }
+            };
+            
+            int main() {
+                EmergencyResponseSystem system(5); // 5 locations
+            
+                // Add resources
+                system.addResource("Ambulance 1", 0);
+                system.addResource("Fire Truck 1", 2);
+            
+                // Add roads (locations and distances)
+                system.addRoad(0, 1, 4);
+                system.addRoad(1, 2, 6);
+                system.addRoad(2, 3, 5);
+                system.addRoad(3, 4, 3);
+                system.addRoad(0, 4, 10);
+            
+                // Add emergencies
+                system.addEmergency("Location A", 5, 3); // Location 3 with high severity
+                system.addEmergency("Location B", 3, 1); // Location 1 with medium severity
+            
+                // Handle emergencies
+                system.handleEmergencies();
+            
+                return 0;
+            }
+                
+      </code></pre>
+    </div>
+
+    <!-- Output Block -->
+    <div id="output" class="output"></div>
+  </div>
+</div>
+</section>
+
+<!-- Footer Section -->
+<footer style="text-align: center; padding: 50px; background-color: #007bff; color: white;">
+<p>&copy; © 2024 DESIGN AND ANALYSIS OF ALGORITHMS. All rights reserved.</p>
+</footer>
+
+<script>
+// Initialize AOS (Animate On Scroll)
+AOS.init();
+
+// Simulate Code Execution and Display Output
+function simulateCodeRun() {
+  document.getElementById('output').innerHTML = 'Handling Emergency at: Location A (Severity: 5) . Assigned Resource: Fire Truck 1 (Distance: 5) . Handling Emergency at: Location B (Severity: 3) . Assigned Resource: Ambulance 1 (Distance: 4)';
+}
+</script>
+
+</body>
+</html>

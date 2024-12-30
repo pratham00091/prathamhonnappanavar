@@ -1,0 +1,166 @@
+<link rel="stylesheet" href="style.css">
+<!-- Full Code Implementation Block -->
+<div class="block" data-aos="fade-up">
+    <h1 style="text-align: center;">4. Full Code Implementation (C++)</h1>
+    
+    <!-- Code Editor Block -->
+    <div class="back">
+        <a href="smartpatient.html"><button>Back</button></a>
+     </div>
+    <div class="code-editor">
+      <button class="run-btn" onclick="simulateCodeRun()">Run Code</button>
+      <pre><code class="cpp">
+        #include <iostream>
+            #include <vector>
+            #include <queue>
+            #include <climits>
+            #include <string>
+            #include <unordered_map>
+            
+            using namespace std;
+            
+            // Structure to represent a healthcare facility
+            struct Facility {
+                string name;
+                int capacity; // Number of available beds
+                int resources; // Resource score (higher is better)
+            };
+            
+            // Structure to represent a patient
+            struct Patient {
+                string name;
+                int urgency; // 1 (high) to 5 (low)
+            };
+            
+            // Graph to store distances between facilities
+            class Graph {
+                int V; // Number of vertices (facilities)
+                vector<vector<pair<int, int>>> adj; // Adjacency list (node, weight)
+            
+            public:
+                Graph(int V) : V(V), adj(V) {}
+            
+                void addEdge(int u, int v, int w) {
+                    adj[u].emplace_back(v, w);
+                    adj[v].emplace_back(u, w); // Undirected graph
+                }
+            
+                // Dijkstra's algorithm to find the shortest path
+                vector<int> shortestPath(int src) {
+                    vector<int> dist(V, INT_MAX);
+                    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
+            
+                    dist[src] = 0;
+                    pq.emplace(0, src);
+            
+                    while (!pq.empty()) {
+                        int d = pq.top().first;
+                        int u = pq.top().second;
+                        pq.pop();
+            
+                        if (d > dist[u]) continue;
+            
+                        for (auto &[v, w] : adj[u]) {
+                            if (dist[u] + w < dist[v]) {
+                                dist[v] = dist[u] + w;
+                                pq.emplace(dist[v], v);
+                            }
+                        }
+                    }
+                    return dist;
+                }
+            };
+            
+            // Allocation system
+            class SmartPatientAllocation {
+                vector<Facility> facilities;
+                Graph graph;
+            
+            public:
+                SmartPatientAllocation(int facilityCount) : graph(facilityCount) {}
+            
+                void addFacility(const string &name, int capacity, int resources) {
+                    facilities.push_back({name, capacity, resources});
+                }
+            
+                void addDistance(int facility1, int facility2, int distance) {
+                    graph.addEdge(facility1, facility2, distance);
+                }
+            
+                void allocatePatient(const Patient &patient, int patientLocation) {
+                    auto distances = graph.shortestPath(patientLocation);
+            
+                    int bestFacility = -1;
+                    int minDistance = INT_MAX;
+                    int maxResources = -1;
+            
+                    for (int i = 0; i < facilities.size(); ++i) {
+                        if (facilities[i].capacity > 0 && distances[i] < minDistance) {
+                            if (distances[i] < minDistance || (distances[i] == minDistance && facilities[i].resources > maxResources)) {
+                                bestFacility = i;
+                                minDistance = distances[i];
+                                maxResources = facilities[i].resources;
+                            }
+                        }
+                    }
+            
+                    if (bestFacility != -1) {
+                        cout << "Patient " << patient.name << " is allocated to facility " << facilities[bestFacility].name
+                             << " located at distance " << minDistance << "\n";
+                        facilities[bestFacility].capacity--;
+                    } else {
+                        cout << "No available facility for patient " << patient.name << "\n";
+                    }
+                }
+            };
+            
+            int main() {
+                SmartPatientAllocation system(3);
+            
+                // Add facilities
+                system.addFacility("City Hospital", 10, 80);
+                system.addFacility("Green Valley Clinic", 5, 70);
+                system.addFacility("Sunrise Health Center", 8, 90);
+            
+                // Add distances between facilities (as an example)
+                system.addDistance(0, 1, 5);
+                system.addDistance(1, 2, 10);
+                system.addDistance(0, 2, 15);
+            
+                // Add patients
+                Patient patient1 = {"Alice", 2};
+                Patient patient2 = {"Bob", 1};
+            
+                // Allocate patients based on their location
+                system.allocatePatient(patient1, 0); // Alice is at location 0
+                system.allocatePatient(patient2, 1); // Bob is at location 1
+            
+                return 0;
+            }
+            
+      </code></pre>
+    </div>
+
+    <!-- Output Block -->
+    <div id="output" class="output"></div>
+  </div>
+</div>
+</section>
+
+<!-- Footer Section -->
+<footer style="text-align: center; padding: 50px; background-color: #007bff; color: white;">
+<p>&copy; © 2024 DESIGN AND ANALYSIS OF ALGORITHMS. All rights reserved.</p>
+</footer>
+
+<script>
+// Initialize AOS (Animate On Scroll)
+AOS.init();
+
+// Simulate Code Execution and Display Output
+function simulateCodeRun() {
+  document.getElementById('output').innerHTML = 'Patient Alice is allocated to facility City Hospital located at distance 0, Patient Bob is allocated to facility Green Valley Clinic located at distance 0';
+}
+</script>
+
+</body>
+</html>
